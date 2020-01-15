@@ -65,12 +65,14 @@ public class UserController {
     // 清除全部缓存用户
     @GetMapping("/clearCacheList")
     public List<User> clearCacheList() {
+        userCacheService.clearAllCache();
         return userCacheService.findAllCache();
     }
 
     // 清除缓存用户
     @GetMapping("/clearCache")
     public User clearCache(Integer userId) {
+        userCacheService.clearCache(userId);
         return userCacheService.getCache(userId);
     }
 
