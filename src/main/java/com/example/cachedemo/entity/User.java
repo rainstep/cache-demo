@@ -1,12 +1,12 @@
 package com.example.cachedemo.entity;
 
-
 import java.io.Serializable;
 
 public class User implements Serializable {
     private static final long serialVersionUID = 1952488462294220989L;
 
     private Integer userId;
+
     private String userName;
 
     public Integer getUserId() {
@@ -24,5 +24,4 @@ public class User implements Serializable {
     public void setUserName(String userName) {
         this.userName = userName;
     }
-
 }

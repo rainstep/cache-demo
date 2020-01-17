@@ -6,7 +6,10 @@ import com.example.cachedemo.service.cache.UserCacheService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @Service
@@ -17,6 +20,42 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> findAll() {
         return userDao.findAll();
+    }
+
+    @Override
+    public List<User> findByUserIdIn(List<Integer> userIdList) {
+        return userDao.findByUserIdIn(userIdList);
+    }
+
+    @Override
+    public Map<Integer, User> findMapByUserIdIn(List<Integer> userIdList) {
+        List<User> list = userDao.findByUserIdIn(userIdList);
+        Map<Integer, User> userMap = new HashMap<>();
+        for (User user : list) {
+            userMap.put(user.getUserId(), user);
+        }
+        return userMap;
+    }
+
+    @Override
+    public List<User> findByUserNameLike(String userName) {
+        if (userName == null) userName = "%";
+        else userName = "%" + userName + "%";
+        return userDao.findByUserNameLike(userName);
+    }
+
+    @Override
+    public List<User> findByUserNameStartWith(String userName) {
+        if (userName == null) userName = "%";
+        else userName = userName + "%";
+        return userDao.findByUserNameLike(userName);
+    }
+
+    @Override
+    public List<User> findByUserNameEndWith(String userName) {
+        if (userName == null) userName = "%%";
+        else userName = "%" + userName;
+        return userDao.findByUserNameLike(userName);
     }
 
     @Override
@@ -65,6 +104,23 @@ public class UserServiceImpl implements UserService {
 //        userCacheService.clearCache(user.getUserId());
     }
 
+    @Override
+    public void batchInsert(List<User> userList) {
+        userDao.batchInsert(userList);
+    }
+
+    @Override
+    public List<User> batchAdd(List<String> userNameList) {
+        if (userNameList == null || userNameList.size() == 0) return new ArrayList<>();
+        List<User> userList = new ArrayList<>();
+        for (String userName : userNameList) {
+            User user = new User();
+            user.setUserName(userName);
+            userList.add(user);
+        }
+        userDao.batchInsert(userList);
+        return userList;
+    }
 
     /* Setters */
     @Autowired

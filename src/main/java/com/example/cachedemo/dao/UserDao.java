@@ -7,6 +7,10 @@ import java.util.List;
 public interface UserDao {
     List<User> findAll();
 
+    List<User> findByUserNameLike(String userName);
+
+    List<User> findByUserIdIn(List<Integer> userIdList);
+
     User get(int userId);
 
     void insert(User user);
@@ -15,4 +19,5 @@ public interface UserDao {
 
     void delete(int userId);
 
+    void batchInsert(List<User> userList);
 }

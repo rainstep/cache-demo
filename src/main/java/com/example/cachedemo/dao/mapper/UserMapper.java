@@ -1,29 +1,34 @@
 package com.example.cachedemo.dao.mapper;
 
 import com.example.cachedemo.entity.User;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
-import org.springframework.stereotype.Repository;
-
+import com.example.cachedemo.entity.UserExample;
 import java.util.List;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserMapper {
-    @Select("select user_id, user_name from user")
-    List<User> selectAll();
+    long countByExample(UserExample example);
 
-    @Select("select user_id, user_name from user where user_id = #{userId}")
-    User get(Integer userId);
+    int deleteByExample(UserExample example);
 
-    @Insert("insert into user (user_name) values (#{userName})")
-    void insert(User user);
+    int deleteByPrimaryKey(Integer userId);
 
-    @Update("update user set user_name = #{userName} where user_id = #{userId}")
-    void update(User user);
+    int insert(User record);
 
-    @Delete("delete from user where user_id = #{userId}")
-    void delete(Integer userId);
+    int insertSelective(User record);
 
+    List<User> selectByExample(UserExample example);
+
+    User selectByPrimaryKey(Integer userId);
+
+    int updateByExampleSelective(@Param("record") User record, @Param("example") UserExample example);
+
+    int updateByExample(@Param("record") User record, @Param("example") UserExample example);
+
+    int updateByPrimaryKeySelective(User record);
+
+    int updateByPrimaryKey(User record);
+
+    void batchInsert(List<User> userList);
 }

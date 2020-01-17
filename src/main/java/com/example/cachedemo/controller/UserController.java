@@ -29,6 +29,7 @@ public class UserController {
         return userCacheService.findAllCache();
     }
 
+
     // 用户详细
     @GetMapping("/get")
     public User get(Integer userId) {
